@@ -23,4 +23,4 @@ This plugin defines a global `fonts` object, which provides access to the fonts 
 
 ## Installation
 
-    cordova plugin add https://github.com/eb1/cordova-fonts.git
+    cordova plugin add https://github.com/adapt-it/cordova-fonts.git

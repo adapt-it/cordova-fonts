@@ -9,8 +9,8 @@
     <author>Erik Brommers</author>
     <license>Apache 2.0 License</license>
     <keywords>cordova,fonts</keywords>
-    <repo>https://github.com/eb1/cordova-fonts.git</repo>
-    <issue>https://github.com/eb1/cordova-fonts/issues</issue>
+    <repo>https://github.com/adapt-it/cordova-fonts.git</repo>
+    <issue>https://github.com/adapt-it/cordova-fonts/issues</issue>
     <js-module name="fonts" src="www/fonts.js">
         <clobbers target="cordova.plugins.fonts" />
     </js-module>
