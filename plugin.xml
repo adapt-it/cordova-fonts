@@ -1,0 +1,20 @@
+<?xml version='1.0' encoding='utf-8'?>
+<plugin id="org.sil.cordova.fonts" version="0.0.1" xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android">
+    <name>cordova-fonts</name>
+    <description>Cordova Fonts Plugin</description>
+    <author>Erik Brommers</author>
+    <license>Apache 2.0 License</license>
+    <keywords>cordova,fonts</keywords>
+    <js-module name="cordova-fonts" src="www/cordova-fonts.js">
+        <clobbers target="cordova.plugins.cordova-fonts" />
+    </js-module>
+    <platform name="ios">
+        <config-file target="config.xml" parent="/*">
+            <feature name="Fonts">
+                <param name="ios-package" value="CDVFonts"/>
+            </feature>
+        </config-file>
+        <header-file src="src/ios/CDVFonts.h" />
+        <source-file src="src/ios/CDVFonts.m" />
+    </platform>
+</plugin>
