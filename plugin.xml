@@ -1,12 +1,18 @@
 <?xml version='1.0' encoding='utf-8'?>
-<plugin id="org.sil.cordova.fonts" version="0.0.1" xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android">
-    <name>cordova-fonts</name>
+<plugin id="org.adapt-it.cordova.fonts" 
+        version="0.0.1" 
+        xmlns="http://apache.org/cordova/ns/plugins/1.0" 
+        xmlns:rim="http://www.blackberry.com/ns/widgets"
+        xmlns:android="http://schemas.android.com/apk/res/android">
+    <name>Fonts</name>
     <description>Cordova Fonts Plugin</description>
     <author>Erik Brommers</author>
     <license>Apache 2.0 License</license>
     <keywords>cordova,fonts</keywords>
-    <js-module name="cordova-fonts" src="www/cordova-fonts.js">
-        <clobbers target="cordova.plugins.cordova-fonts" />
+    <repo>https://github.com/eb1/cordova-fonts.git</repo>
+    <issue>https://github.com/eb1/cordova-fonts/issues</issue>
+    <js-module name="fonts" src="www/fonts.js">
+        <clobbers target="cordova.plugins.fonts" />
     </js-module>
     <platform name="ios">
         <config-file target="config.xml" parent="/*">
