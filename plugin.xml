@@ -11,8 +11,9 @@
     <keywords>cordova,fonts</keywords>
     <repo>https://github.com/adapt-it/cordova-fonts.git</repo>
     <issue>https://github.com/adapt-it/cordova-fonts/issues</issue>
+    <!-- expose our API under navigator.Fonts -->
     <js-module name="fonts" src="www/fonts.js">
-        <clobbers target="cordova.plugins.fonts" />
+        <clobbers target="navigator.Fonts" />
     </js-module>
     <!-- ios -->
     <platform name="ios">

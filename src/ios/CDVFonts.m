@@ -9,18 +9,17 @@
 
     NSArray *familyNames = [[NSArray alloc] initWithArray:[UIFont familyNames]];
     NSArray *fontNames;
-    NSMutableArray* fonts = [NSMutableArray array];
+    NSMutableArray *fonts = [NSMutableArray array];
     NSInteger indFamily, indFont;
     for (indFamily=0; indFamily<[familyNames count]; ++indFamily)
     {
         fontNames = [[NSArray alloc] initWithArray:
                      [UIFont fontNamesForFamilyName:
                       [familyNames objectAtIndex:indFamily]]];
-        fonts.addObjectsFromArray(fontNames);
-        [fontNames release];
+        [fonts addObjectsFromArray:fontNames];
     }
 
-    if (fonts != nil && [fonts length] > 0) {
+    if (fonts != nil) {
     pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsArray:fonts];
     } else {
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR];
