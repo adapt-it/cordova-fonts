@@ -16,11 +16,9 @@
         fontNames = [[NSArray alloc] initWithArray:
                      [UIFont fontNamesForFamilyName:
                       [familyNames objectAtIndex:indFamily]]];
-        fontList.addObjectsFromArray(fontNames);
+        fonts.addObjectsFromArray(fontNames);
         [fontNames release];
     }
-    [familyNames release];
-    
 
     if (fonts != nil && [fonts length] > 0) {
     pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsArray:fonts];
@@ -28,7 +26,6 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR];
     }
 
-    [fonts release];
     [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
 }
 
