@@ -1,46 +1,90 @@
-package org.adapt-it.cordova.fonts;
+/*
+       Licensed to the Apache Software Foundation (ASF) under one
+       or more contributor license agreements.  See the NOTICE file
+       distributed with this work for additional information
+       regarding copyright ownership.  The ASF licenses this file
+       to you under the Apache License, Version 2.0 (the
+       "License"); you may not use this file except in compliance
+       with the License.  You may obtain a copy of the License at
+         http://www.apache.org/licenses/LICENSE-2.0
+       Unless required by applicable law or agreed to in writing,
+       software distributed under the License is distributed on an
+       "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+       KIND, either express or implied.  See the License for the
+       specific language governing permissions and limitations
+       under the License.
+*/
+/*
+ * Portions copyright (C) 2011 George Yunaev @ Ulduzsoft
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ */
+
+package org.adaptit.cordova.fonts;
  
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaPlugin;
+import org.apache.cordova.PluginResult;
 import org.json.JSONObject;
 import org.json.JSONArray;
 import org.json.JSONException;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.util.HashMap;
-
 import android.app.Activity;
 import android.content.Intent;
 
-public class fonts extends CordovaPlugin {
+
+public class Fonts extends CordovaPlugin {
+    public static final String GETFONTLIST = "getFontList";
     
     @Override
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
+        JSONObject obj = new JSONObject();
+        
         try {
-            if (action.equals("fonts")) { 
-                JSONObject arg_object = args.getJSONObject(0);
-                Intent calIntent = new Intent(Intent.ACTION_EDIT)
-                    .setType("vnd.android.cursor.item/event")
-                    .putExtra("beginTime", arg_object.getLong("startTimeMillis"))
-                    .putExtra("endTime", arg_object.getLong("endTimeMillis"))
-                    .putExtra("title", arg_object.getString("title"))
-                    .putExtra("description", arg_object.getString("description"))
-                    .putExtra("eventLocation", arg_object.getString("eventLocation"));
-             
-               this.cordova.getActivity().startActivity(calIntent);
-               callbackContext.success();
-               return true;
+            if (action.equals(GETFONTLIST)) {
+                obj = getFontList();
+            } else {
+                return false;
             }
-            callbackContext.error("Invalid action");
-            return false;
+            callbackContext.success(obj);
         } catch(Exception e) {
             System.err.println("Exception: " + e.getMessage());
-            callbackContext.error(e.getMessage());
-            return false;
+            callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.JSON_EXCEPTION));
         } 
+        return true;
+    }
+    
+    private JSONObject getFontList() {
+        String[] fontdirs = { "/system/fonts", "/system/font", "/data/fonts" };
+        HashMap< String, String > fonts = new HashMap< String, String >();
+        TTFAnalyzer analyzer = new TTFAnalyzer();
+        
+        for ( String fontdir : fontdirs )
+        {
+            File dir = new File( fontdir );
+            if ( !dir.exists() )
+                continue;
+
+            File[] files = dir.listFiles();
+            if ( files == null )
+                continue;
+
+            for ( File file : files )
+            {
+                String fontname = analyzer.getTtfFontName( file.getAbsolutePath() );
+                if ( fontname != null )
+                    fonts.put( file.getAbsolutePath(), fontname );
+            }
+        }
+        if (fonts.isEmpty())
+            return null;
+
+        JSONObject obj = new JSONObject(fonts);
+        return obj; 
     }
 }
 

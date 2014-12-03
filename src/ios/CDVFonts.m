@@ -1,9 +1,9 @@
 #import "CDVFonts.h"
 #import <Cordova/CDV.h>
 
-@implementation Fonts
+@implementation CDVFonts
 
-- (void)fonts:(CDVInvokedUrlCommand*)command
+- (void)getFontList:(CDVInvokedUrlCommand*)command
 {
     CDVPluginResult* pluginResult = nil;
 

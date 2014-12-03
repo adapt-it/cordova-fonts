@@ -1,7 +1,7 @@
  #import <Cordova/CDV.h>
 
-@interface Fonts : CDVPlugin
+@interface CDVFonts : CDVPlugin
 
-- (void)fonts:(CDVInvokedUrlCommand*)command;
+- (void)getFontList:(CDVInvokedUrlCommand*)command;
 
 @end

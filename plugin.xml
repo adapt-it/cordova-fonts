@@ -29,9 +29,9 @@
     <platform name="android">
         <config-file target="config.xml" parent="/*">
             <feature name="Fonts">
-                <param name="android-package" value="org.adapt-it.cordova.fonts"/>
+                <param name="android-package" value="org.adaptit.cordova.fonts"/>
             </feature>
         </config-file>
-        <source-file src="src/android/fonts.java" target-dir="src/org/adapt-it/fonts" />      
+        <source-file src="src/android/Fonts.java" target-dir="src/org/adapt-it/Fonts" />      
      </platform>          
 </plugin>
