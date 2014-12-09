@@ -16,47 +16,50 @@ namespace WPCordovaClassLib.Cordova.Commands
         {
             try
             {
+                FontFamily[] fontFamilies;
+                InstalledFontCollection installedFontCollection = new InstalledFontCollection();
+                // Get the array of FontFamily objects.
+                fontFamilies = installedFontCollection.Families;
                 var language = CultureInfo.CurrentUICulture.Name;
-                PluginResult result = new PluginResult(PluginResult.Status.OK, this.WrapIntoJSON(language));
+                PluginResult result = new PluginResult(PluginResult.Status.OK, this.WrapIntoJSON(fontFamilies));
                 this.DispatchCommandResult(result);
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                this.DispatchCommandResult(new PluginResult(PluginResult.Status.ERROR, new GlobalizationError()));
+                this.DispatchCommandResult(new PluginResult(PluginResult.Status.ERROR, e));
             }
         }
-        
 
-FontFamily fontFamily = new FontFamily("Arial");
-Font font = new Font(
-   fontFamily,
-   8,
-   FontStyle.Regular,
-   GraphicsUnit.Point);
-RectangleF rectF = new RectangleF(10, 10, 500, 500);
-SolidBrush solidBrush = new SolidBrush(Color.Black);
+        /// <summary>
+        /// Wraps data into JSON format
+        /// </summary>
+        /// <param name="data">data</param>
+        /// <returns>data formatted as JSON object</returns>
+        private string WrapIntoJSON<T>(T data, string keyName = "value")
+        {
+            string param = "{0}";
+            string stringifiedData = data.ToString();
 
-string familyName;
-string familyList = "";
-FontFamily[] fontFamilies;
+            if (data.GetType() == typeof(string))
+            {
+                param = "\"" + param + "\"";
+            }
 
-InstalledFontCollection installedFontCollection = new InstalledFontCollection();
+            if (data.GetType() == typeof(bool))
+            {
+                stringifiedData = stringifiedData.ToLower();
+            }
 
-// Get the array of FontFamily objects.
-fontFamilies = installedFontCollection.Families;
+            if (data.GetType() == typeof(string[]))
+            {
+                stringifiedData = JSON.JsonHelper.Serialize(data);
+            }
 
-// The loop below creates a large string that is a comma-separated 
-// list of all font family names. 
+            var formattedData = string.Format("\"" + keyName + "\":" + param, stringifiedData);
+            formattedData = "{" + formattedData + "}";
 
-int count = fontFamilies.Length;
-for (int j = 0; j < count; ++j)
-{
-    familyName = fontFamilies[j].Name;
-    familyList = familyList + familyName;
-    familyList = familyList + ",  ";
-}
+            return formattedData;
+        }
 
-// Draw the large string (list of all families) in a rectangle.
-e.Graphics.DrawString(familyList, font, solidBrush, rectF);
     }
 }
