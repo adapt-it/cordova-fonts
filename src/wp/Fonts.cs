@@ -1,4 +1,5 @@
 using System;
+using System.Windows.Media;
 using System.Runtime.Serialization;
 
 namespace WPCordovaClassLib.Cordova.Commands
@@ -16,11 +17,13 @@ namespace WPCordovaClassLib.Cordova.Commands
         {
             try
             {
-                FontFamily[] fontFamilies;
-                InstalledFontCollection installedFontCollection = new InstalledFontCollection();
-                // Get the array of FontFamily objects.
-                fontFamilies = installedFontCollection.Families;
-                var language = CultureInfo.CurrentUICulture.Name;
+                string fontFamilies = "";
+                //TODO: System.Windows.Media.SystmTypefaces?
+//                Typefase[] typefaces = 
+//                FontFamily[] fontFamilies;
+//                InstalledFontCollection installedFontCollection = new InstalledFontCollection();
+//                // Get the array of FontFamily objects.
+//                fontFamilies = installedFontCollection.Families;
                 PluginResult result = new PluginResult(PluginResult.Status.OK, this.WrapIntoJSON(fontFamilies));
                 this.DispatchCommandResult(result);
             }

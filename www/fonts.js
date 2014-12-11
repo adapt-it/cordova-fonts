@@ -12,9 +12,9 @@ var Fonts = {
 *    Fonts.getFontList(function(fontList) {console.log(fontList);},
 *                      function(error) {console.log(error);});
 */
-getFontList:function(successCB, errorCB) {
-    exec(successCB, errorCB, "Fonts", "getFontList", []);
-}
+    getFontList: function (successCB, errorCB) {
+        exec(successCB, errorCB, "Fonts", "getFontList", []);
+    }
 
 };
 

@@ -59,6 +59,7 @@ public class Fonts extends CordovaPlugin {
     }
     
     private JSONObject getFontList() {
+        System.out.println("getFontList(): entry");
         String[] fontdirs = { "/system/fonts", "/system/font", "/data/fonts" };
         HashMap< String, String > fonts = new HashMap< String, String >();
         TTFAnalyzer analyzer = new TTFAnalyzer();
@@ -75,9 +76,12 @@ public class Fonts extends CordovaPlugin {
 
             for ( File file : files )
             {
+                System.out.println("analyzing file: " + file.getAbsolutePath());
                 String fontname = analyzer.getTtfFontName( file.getAbsolutePath() );
-                if ( fontname != null )
+                if ( fontname != null ) {
+                    System.out.println("found font: " + fontname);
                     fonts.put( file.getAbsolutePath(), fontname );
+                }
             }
         }
         if (fonts.isEmpty())
