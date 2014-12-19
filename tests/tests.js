@@ -20,37 +20,62 @@
 */
 
 exports.defineAutoTests = function () {
-    describe('Fonts (window.fonts)', function () {
-        it("should exist", function() {
-            expect(window.fonts).toBeDefined();
+    describe('Fonts (navigator.Fonts)', function () {
+        it("Font.spec.1 should exist", function () {
+            expect(navigator.Fonts).toBeDefined();
+        });
+        
+        describe('getFontList', function () {
+            var getFontList = function (a) {
+                expect(a).toBeDefined();
+            };
+            it("Fonts.spec.1 should exist", function () {
+                expect(typeof navigator.Fonts.getFontList).toBeDefined();
+                expect(typeof navigator.Fonts.getFontList === 'function').toBe(true);
+            });
         });
     });
 };
 
 exports.defineManualTests = function (contentEl, createActionButton) {
-  var logMessage = function (message, color) {
-        var log = document.getElementById('info');
-        var logLine = document.createElement('div');
-        if (color) {
-            logLine.style.color = color;
-        }
-        logLine.innerHTML = message;
-        log.appendChild(logLine);
-    }
-
-    var clearLog = function () {
-        var log = document.getElementById('info');
-        log.innerHTML = '';
-    }
-
     var device_tests = '<h3>Press Fonts button to get the list of defined fonts</h3>' +
         '<div id="Fonts"></div>' +
-        'Expected result: Status box will get updated with fonts.';
+        '<p>Expected result: Status box will get updated with fonts.</p>',
+        
+        logMessage = function (message, color) {
+            var log = document.getElementById('info'),
+                logLine = document.createElement('div');
+            
+            if (color) {
+                logLine.style.color = color;
+            }
+            logLine.innerHTML = message;
+            log.appendChild(logLine);
+        },
 
-    contentEl.innerHTML = '<div id="info"></div>' + fonts;
+        clearLog = function () {
+            var log = document.getElementById('info');
+            log.innerHTML = '';
+        };
+
+
+    contentEl.innerHTML = '<div id="info"></div>' + device_tests;
 
     createActionButton('Dump device', function () {
         clearLog();
-        logMessage(JSON.stringify(window.fonts, null, '\t'));
+        var value = "";
+        if (navigator.Fonts) {
+            navigator.Fonts.getFontList(
+                function (success) {
+                    value = success;
+                },
+                function (error) {
+                    value = error;
+                }
+            );
+        } else {
+            value = "no Fonts object in navigator";
+        }
+        logMessage(JSON.stringify(value, null, '\t'));
     }, "fonts");
 };
