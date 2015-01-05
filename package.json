@@ -1,0 +1,23 @@
+{
+  "name": "cordova-fonts",
+  "version": "0.0.1",
+  "description": "Cordova Fonts plugin",
+  "main": "fonts.js",
+  "directories": {
+    "doc": "doc",
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "grunt test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/adapt-it/cordova-fonts.git"
+  },
+  "author": "Erik Brommers",
+  "license": "APL",
+  "bugs": {
+    "url": "https://github.com/adapt-it/cordova-fonts/issues"
+  },
+  "homepage": "https://github.com/adapt-it/cordova-fonts"
+}
