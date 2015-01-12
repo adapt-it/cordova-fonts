@@ -42,15 +42,15 @@ public class Fonts extends CordovaPlugin {
     
     @Override
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
-        JSONObject obj = new JSONObject();
+        JSONArray results;
         
         try {
             if (action.equals(GETFONTLIST)) {
-                obj = getFontList();
+                results = getFontList();
             } else {
                 return false;
             }
-            callbackContext.success(obj);
+            callbackContext.success(results);
         } catch(Exception e) {
             System.err.println("Exception: " + e.getMessage());
             callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.JSON_EXCEPTION));
@@ -58,10 +58,10 @@ public class Fonts extends CordovaPlugin {
         return true;
     }
     
-    private JSONObject getFontList() {
+    private JSONArray getFontList() {
         System.out.println("getFontList(): entry");
         String[] fontdirs = { "/system/fonts", "/system/font", "/data/fonts" };
-        HashMap< String, String > fonts = new HashMap< String, String >();
+        JSONArray fonts = new JSONArray();
         TTFAnalyzer analyzer = new TTFAnalyzer();
         
         for ( String fontdir : fontdirs )
@@ -80,15 +80,14 @@ public class Fonts extends CordovaPlugin {
                 String fontname = analyzer.getTtfFontName( file.getAbsolutePath() );
                 if ( fontname != null ) {
                     System.out.println("found font: " + fontname);
-                    fonts.put( file.getAbsolutePath(), fontname );
+                    fonts.put( fontname );
                 }
             }
         }
-        if (fonts.isEmpty())
+        if (fonts.length() < 1)
             return null;
 
-        JSONObject obj = new JSONObject(fonts);
-        return obj; 
+        return fonts; 
     }
 }
 

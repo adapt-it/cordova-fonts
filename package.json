@@ -1,11 +1,6 @@
 {
   "name": "cordova-fonts",
   "version": "0.0.1",
-  "devDependencies": {
-    "grunt": "~0.4.5",
-    "grunt-contrib-jasmine": "^0.8.1",
-    "grunt-cordova-jasmine": "^0.1.0"
-  },
   "description": "Cordova Fonts plugin",
   "main": "fonts.js",
   "directories": {

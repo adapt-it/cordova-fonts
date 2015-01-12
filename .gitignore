@@ -1,2 +1,13 @@
+# ignore any IDE or OS-generated data
 
-node_modules/
+*.csproj.user
+*.suo
+*.cache
+Thumbs.db
+*.DS_Store
+
+*.bak
+*.cache
+*.log
+*.swp
+*.user
