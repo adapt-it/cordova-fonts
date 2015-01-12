@@ -41,16 +41,25 @@ public class Fonts extends CordovaPlugin {
     public static final String GETFONTLIST = "getFontList";
     
     @Override
-    public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
-        JSONArray results;
+    public boolean execute(String action, JSONArray args, final CallbackContext callbackContext) throws JSONException {
+//        JSONArray results;
         
         try {
             if (action.equals(GETFONTLIST)) {
-                results = getFontList();
+                cordova.getThreadPool().execute(
+                    new Runnable() {
+                        public void run() {
+                            final JSONArray results = getFontList();
+                            System.out.println("results: " + results.toString());
+                            callbackContext.success(results);
+                        }
+                    }
+                );
+                return true;
+
             } else {
                 return false;
             }
-            callbackContext.success(results);
         } catch(Exception e) {
             System.err.println("Exception: " + e.getMessage());
             callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.JSON_EXCEPTION));
@@ -66,7 +75,7 @@ public class Fonts extends CordovaPlugin {
         
         for ( String fontdir : fontdirs )
         {
-            System.out.println("fontdir: " + fontdir);
+//            System.out.println("fontdir: " + fontdir);
             File dir = new File( fontdir );
             if ( !dir.exists() )
                 continue;
@@ -77,7 +86,7 @@ public class Fonts extends CordovaPlugin {
 
             for ( File file : files )
             {
-                System.out.println("analyzing file: " + file.getAbsolutePath());
+//                System.out.println("analyzing file: " + file.getAbsolutePath());
                 String fontname = analyzer.getTtfFontName( file.getAbsolutePath() );
                 if ( fontname != null ) {
                     System.out.println("found font: " + fontname);
