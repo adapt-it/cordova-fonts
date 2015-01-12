@@ -66,6 +66,7 @@ public class Fonts extends CordovaPlugin {
         
         for ( String fontdir : fontdirs )
         {
+            System.out.println("fontdir: " + fontdir);
             File dir = new File( fontdir );
             if ( !dir.exists() )
                 continue;

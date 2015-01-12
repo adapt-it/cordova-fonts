@@ -29,10 +29,10 @@
     <platform name="android">
         <config-file target="config.xml" parent="/*">
             <feature name="Fonts">
-                <param name="android-package" value="org.adaptit.cordova.fonts"/>
+                <param name="android-package" value="org.adaptit.cordova.fonts.Fonts"/>
             </feature>
         </config-file>
-        <source-file src="src/android/Fonts.java" target-dir="src/org/adapt-it/Fonts" />      
+        <source-file src="src/android/Fonts.java" target-dir="src/org/adaptit/cordova/Fonts" />      
      </platform>          
     <!-- wp7 -->
     <platform name="wp7">
