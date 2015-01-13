@@ -34,26 +34,5 @@
         </config-file>
         <source-file src="src/android/Fonts.java" target-dir="src/org/adaptit/cordova/Fonts" />      
      </platform>          
-    <!-- wp7 -->
-    <!--
-    <platform name="wp7">
-        <config-file target="config.xml" parent="/*">
-            <feature name="Fonts">
-                <param name="wp-package" value="Fonts"/>
-            </feature>
-        </config-file>
-        <source-file src="src/wp/Fonts.cs" />
-    </platform>
-    -->
-    <!-- wp8 -->
-    <!--
-    <platform name="wp8">
-        <config-file target="config.xml" parent="/*">
-            <feature name="Fonts">
-                <param name="wp-package" value="Fonts"/>
-            </feature>
-        </config-file>
-        <source-file src="src/wp/Fonts.cs" />
-    </platform>
-    -->
+    <!-- wp7 and Firefox OS not currently supported -->
 </plugin>

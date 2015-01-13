@@ -19,15 +19,61 @@
 
 # org.adapt-it.cordova.fonts
 
-This plugin defines a global `fonts` object, which provides access to the fonts installed on the device.
+This plugin defines a global `Fonts` object, which provides access to the fonts installed on the device. The `Fonts` object is available from the `navigator` object after the `deviceready` event fires.
+
+    document.addEventListener("deviceready", onDeviceReady, false);
+    function onDeviceReady() {
+        console.log(navigator.Fonts);
+    }
 
 ## Installation
 
     cordova plugin add https://github.com/adapt-it/cordova-fonts.git
     
+## Supported Platforms
+
+- Android
+- iOS
+
+# Fonts
+
+The `Fonts` object provides a way to enumerate through the list of fonts installed on the device.
+
+## Methods
+
+Currently this plugin only provides a single method, **getFontList**.
+
+### GetFontList
+
+**Parameters:** 
+
+- **successCallback**: Callback that returns the list of fonts as an array of string values.
+- **errorCallback: Callback that executes if an error occurs while retrieving the list of fonts on the local device.
+    
+### Example
+
+    if (navigator.Fonts) {
+        console.log("Fonts object in navigator");
+        navigator.Fonts.getFontList(
+            function (fontList) {
+                if (fontlist) {
+                    for (var i = 0; i < fontlist.length; i++) {
+                        console.log("Font: " + fontlist[i]);
+                    }
+                }
+            },
+            function (error) {
+                console.log("FontList error: " + error);
+            }
+        );
+    } else {
+        console.log("Plugin error: Fonts plugin not found (is it installed?)");
+    }
+
+    
 ## Internal Development / Unit Testing
 
-(This is only for devs who are debugging the plugin itself)
+(This is only for devs who are developing / debugging the plugin itself)
 
 The cordova-fonts plugin uses the cordova-plugin-test-framework to run unit tests. Complete the following to run through the plugin unit tests:
 
