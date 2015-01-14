@@ -34,5 +34,14 @@
         </config-file>
         <source-file src="src/android/Fonts.java" target-dir="src/org/adaptit/cordova/Fonts" />      
      </platform>          
+    <!-- Amazon Fire (just reusing Android) -->
+    <platform name="amazon-fireos">
+        <config-file target="config.xml" parent="/*">
+            <feature name="Fonts">
+                <param name="android-package" value="org.adaptit.cordova.fonts.Fonts"/>
+            </feature>
+        </config-file>
+        <source-file src="src/android/Fonts.java" target-dir="src/org/adaptit/cordova/Fonts" />      
+    </platform>    
     <!-- wp7 and Firefox OS not currently supported -->
 </plugin>

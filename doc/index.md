@@ -33,6 +33,7 @@ This plugin defines a global `Fonts` object, which provides access to the fonts 
 ## Supported Platforms
 
 - Android
+- Amazon Fire OS (untested / just using Android code)
 - iOS
 
 # Fonts
