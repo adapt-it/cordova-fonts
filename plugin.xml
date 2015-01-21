@@ -43,5 +43,11 @@
         </config-file>
         <source-file src="src/android/Fonts.java" target-dir="src/org/adaptit/cordova/Fonts" />      
     </platform>    
+    <!-- firefoxos -->
+    <platform name="firefoxos">
+        <js-module src="src/firefoxos/FontsProxy.js" name="FontsProxy">
+            <runs />
+        </js-module>
+    </platform>
     <!-- wp7 and Firefox OS not currently supported -->
 </plugin>
