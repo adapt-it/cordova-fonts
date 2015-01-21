@@ -39,8 +39,8 @@ exports.defineAutoTests = function () {
 
 exports.defineManualTests = function (contentEl, createActionButton) {
     var device_tests = '<h3>Press Fonts button to get the list of defined fonts</h3>' +
-        '<div id="Fonts"></div>' +
-        '<p>Expected result: Status box will get updated with fonts.</p>',
+        '<div id="cdv_fonts"></div>' +
+        'Expected result: Status box will get updated with installed fonts.',
         
         logMessage = function (message, color) {
             var log = document.getElementById('info'),
@@ -61,21 +61,23 @@ exports.defineManualTests = function (contentEl, createActionButton) {
 
     contentEl.innerHTML = '<div id="info"></div>' + device_tests;
 
-    createActionButton('Dump device', function () {
+    createActionButton('Display Fonts', function () {
         clearLog();
-        var value = "";
+        var value = "", i = 0;
         if (navigator.Fonts) {
             navigator.Fonts.getFontList(
-                function (success) {
-                    value = success;
+                function (fontlist) {
+                    for (i = 0; i < fontlist.length; i++) {
+                        logMessage("Font: " + fontlist[i]);
+                    }
                 },
                 function (error) {
-                    value = error;
+                    logMessage(error);
                 }
             );
         } else {
-            value = "no Fonts object in navigator";
+            logMessage("no Fonts object in navigator");
         }
-        logMessage(JSON.stringify(value, null, '\t'));
-    }, "fonts");
+        
+    }, "cdv_fonts");
 };
