@@ -28,7 +28,13 @@ This plugin defines a global `Fonts` object, which provides access to the fonts 
 
 ## Installation
 
+From the Command line:
+
     cordova plugin add https://github.com/adapt-it/cordova-fonts.git
+
+Config.xml for PhoneGap Build:
+
+    <gap:plugin name="org.adapt-it.cordova.fonts" source="plugins.cordova.io" />
     
 ## Supported Platforms
 
