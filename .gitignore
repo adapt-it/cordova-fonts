@@ -1,4 +1,5 @@
 # ignore any IDE or OS-generated data
+node_modules
 
 *.csproj.user
 *.suo
