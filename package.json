@@ -1,6 +1,6 @@
 {
   "name": "cordova-fonts",
-  "version": "0.0.1",
+  "version": "0.4.0",
   "description": "Cordova Fonts plugin",
   "main": "fonts.js",
   "directories": {

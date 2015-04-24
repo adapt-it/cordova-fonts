@@ -17,7 +17,7 @@
     under the License.
 -->
 
-# org.adapt-it.cordova.fonts
+# cordova-plugin-fonts
 
 This plugin defines a global `Fonts` object, which provides access to the fonts installed on the device. The `Fonts` object is available from the `navigator` object after the `deviceready` event fires.
 
@@ -28,7 +28,9 @@ This plugin defines a global `Fonts` object, which provides access to the fonts 
 
 ## Installation
 
-    cordova plugin add https://github.com/adapt-it/cordova-fonts.git
+    cordova plugin add cordova-fonts
+    
+Note: this command will install the plugin from npm; the plugin should also be available on the cordova plugins registry until October 15, 2015.
     
 ## Supported Platforms
 
