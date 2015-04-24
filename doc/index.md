@@ -30,7 +30,7 @@ This plugin defines a global `Fonts` object, which provides access to the fonts 
 
 From the Command line:
 
-    cordova plugin add cordova-fonts
+    cordova plugin add cordova-plugin-fonts
     
 Note: this command will install the plugin from npm; the plugin should also be available on the cordova plugins registry until October 15, 2015.
 
