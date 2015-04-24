@@ -1,3 +1,3 @@
-# org.adapt-it.cordova.fonts
+# cordova-plugin-fonts
 
 Plugin documentation: [doc/index.md](doc/index.md)
