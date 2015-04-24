@@ -1,6 +1,15 @@
 {
   "name": "cordova-plugin-fonts",
   "version": "0.4.0",
+  "cordova": {
+    "id": "cordova-plugin-fonts",
+    "platforms": [
+        "firefoxos",
+        "android",
+        "amazon-fireos",
+        "ios"
+    ]
+  },
   "description": "Cordova Fonts plugin",
   "main": "fonts.js",
   "directories": {
@@ -18,8 +27,11 @@
   "license": "Apache-2.0",
   "keywords": [
     "cordova",
-    "android",
-    "ios",
+    "ecosystem:cordova",
+    "cordova-android",
+    "cordova-amazon-fireos",
+    "cordova-ios",
+    "cordova-firefox",
     "plugin",
     "fonts"
   ],
