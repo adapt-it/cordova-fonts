@@ -32,7 +32,9 @@ From the Command line:
 
     cordova plugin add cordova-plugin-fonts
     
-Note: this command will install the plugin from npm; the plugin should also be available on the cordova plugins registry until October 15, 2015.
+Note: this command will install the plugin from npm, which is new to this release (0.4.0). You can find this plugin up on npm [here](https://www.npmjs.com/package/cordova-plugin-fonts), or by searching for `ecosystem:cordova` in the npm registry like [this](https://www.npmjs.com/search?q=ecosystem%3Acordova). 
+
+The plugin should also be available on the cordova plugins registry until October 15, 2015.
 
 Config.xml for PhoneGap Build:
 
