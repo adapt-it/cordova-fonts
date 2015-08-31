@@ -10,7 +10,7 @@
     NSArray *familyNames = [[NSArray alloc] initWithArray:[UIFont familyNames]];
     NSArray *fontNames;
     NSMutableArray *fonts = [NSMutableArray array];
-    NSInteger indFamily, indFont;
+    NSInteger indFamily;
     for (indFamily=0; indFamily<[familyNames count]; ++indFamily)
     {
         fontNames = [[NSArray alloc] initWithArray:
