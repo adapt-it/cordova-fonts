@@ -60,9 +60,9 @@ Currently this plugin only provides a single method, **getFontList**.
 **Parameters:** 
 
 - **successCallback**: Callback that returns the list of fonts as an array of string values.
-- **errorCallback: Callback that executes if an error occurs while retrieving the list of fonts on the local device.
+- **errorCallback:** Callback that executes if an error occurs while retrieving the list of fonts on the local device.
 
-** Firefox OS quirks **
+**Firefox OS quirks**
 
 Firefox OS does not provide an API to access the fonts on the device. The Fonts plugin currently returns a list corresponding to the fonts.mk file found in the mozilla-b2g project (https://github.com/mozilla-b2g/moztt/blob/master/fonts.mk), but it is a hard-coded list and not guaranteed to be correct on any particular version or distro of Firefox OS.
     
