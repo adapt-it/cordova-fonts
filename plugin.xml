@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <plugin id="cordova-plugin-fonts" 
-        version="0.4.0" 
+        version="0.5.0" 
         xmlns="http://apache.org/cordova/ns/plugins/1.0" 
         xmlns:rim="http://www.blackberry.com/ns/widgets"
         xmlns:android="http://schemas.android.com/apk/res/android">
@@ -51,6 +51,15 @@
     </platform>
     <!-- wp8 -->
     <platform name="wp8">
+        <config-file target="config.xml" parent="/*">
+            <feature name="Fonts">
+                <param name="wp-package" value="Fonts"/>
+            </feature>
+        </config-file>
+        <source-file src="src/wp/Fonts.cs" />
+    </platform>
+    <!-- windows (UWP) -->
+    <platform name="windows">
         <config-file target="config.xml" parent="/*">
             <feature name="Fonts">
                 <param name="wp-package" value="Fonts"/>

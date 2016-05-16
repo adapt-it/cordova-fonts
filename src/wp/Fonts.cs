@@ -4,22 +4,19 @@ using System.Runtime.Serialization;
 namespace WPCordovaClassLib.Cordova.Commands
 {
     /// <summary>
-    /// Provides information about system locale, culture settings, number formats, ect.
+    /// Base Fonts object
     /// </summary>
     public class Fonts : BaseCommand
     {
         /// <summary>
-        /// Gets the string identifier for the client's current language.
+        /// Returns a string array containing the (an-us) names of the fonts installed on the system.
         /// </summary>
         /// <param name="options"></param>               
         public void getFontList(string options)
         {
             try
             {
-                FontFamily[] fontFamilies;
-
-                InstalledFontCollection installedFontCollection = new InstalledFontCollection();
-                fontFamilies = installedFontCollection.Families;
+                string[] fontFamilies = Microsoft.Graphics.Text.CanvasTextFormat.GetSystemFontFamilies();
                 PluginResult result = new PluginResult(PluginResult.Status.OK, this.WrapIntoJSON(fontFamilies));
                 this.DispatchCommandResult(result);
             }
