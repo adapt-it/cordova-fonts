@@ -6,8 +6,8 @@
     "platforms": [
         "firefoxos",
         "android",
-        "amazon-fireos",
-        "ios"
+        "ios",
+        "windows"
     ]
   },
   "description": "Cordova Fonts plugin",
@@ -29,9 +29,9 @@
     "cordova",
     "ecosystem:cordova",
     "cordova-android",
-    "cordova-amazon-fireos",
     "cordova-ios",
     "cordova-firefox",
+    "cordova-windows"
     "plugin",
     "fonts"
   ],
