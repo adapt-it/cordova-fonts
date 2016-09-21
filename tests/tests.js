@@ -19,20 +19,18 @@
  *
 */
 
+/* jshint jasmine: true */
+/* global cordova */
+
 exports.defineAutoTests = function () {
     describe('Fonts (navigator.Fonts)', function () {
-        it("Font.spec.1 should exist", function () {
+        it("should exist", function () {
             expect(navigator.Fonts).toBeDefined();
         });
         
-        describe('getFontList', function () {
-            var getFontList = function (a) {
-                expect(a).toBeDefined();
-            };
-            it("Fonts.spec.1 should exist", function () {
-                expect(typeof navigator.Fonts.getFontList).toBeDefined();
-                expect(typeof navigator.Fonts.getFontList === 'function').toBe(true);
-            });
+        it("should contain a getFontList function", function () {
+            expect(typeof navigator.Fonts.getFontList).toBeDefined();
+            expect(typeof navigator.Fonts.getFontList).toBe("function");
         });
     });
 };
