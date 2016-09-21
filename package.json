@@ -31,7 +31,7 @@
     "cordova-android",
     "cordova-ios",
     "cordova-firefox",
-    "cordova-windows"
+    "cordova-windows",
     "plugin",
     "fonts"
   ],
