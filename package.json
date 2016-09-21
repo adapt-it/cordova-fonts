@@ -17,7 +17,8 @@
     "test": "tests"
   },
   "scripts": {
-    "test": "grunt"
+    "test": "npm run jshint",
+    "jshint": "node node_modules/jshint/bin/jshint www && node node_modules/jshint/bin/jshint src && node node_modules/jshint/bin/jshint tests"
   },
   "repository": {
     "type": "git",
@@ -35,6 +36,16 @@
     "plugin",
     "fonts"
   ],
+  "engines": {
+    "cordovaDependencies": {
+      "2.0.0": {
+          "cordova": ">100"
+      }
+    }  
+  },
+  "devDependencies": {
+    "jshint": "^2.6.0"  
+  },
   "bugs": {
     "url": "https://github.com/adapt-it/cordova-fonts/issues"
   },
