@@ -20,7 +20,6 @@
 */
 
 /* jshint jasmine: true */
-/* global cordova */
 
 exports.defineAutoTests = function () {
     describe('Fonts (navigator.Fonts)', function () {
@@ -61,7 +60,7 @@ exports.defineManualTests = function (contentEl, createActionButton) {
 
     createActionButton('Display Fonts', function () {
         clearLog();
-        var value = "", i = 0;
+        var i = 0;
         if (navigator.Fonts) {
             navigator.Fonts.getFontList(
                 function (fontlist) {
