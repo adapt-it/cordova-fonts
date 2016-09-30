@@ -101,8 +101,14 @@ function getFontList(successCB, errorCB) {
     successCB({value: fonts});
 }
 
+function getDefaultFont(successCB, errorCB) {
+    'use strict';
+    successCB({value: "Fira Sans Regular"});
+}
+
 var Fonts = {
-    getFontList: getFontList
+    getFontList: getFontList,
+    getDefaultFont: getDefaultFont
 };
 
 require("cordova/exec/proxy").add("Fonts", Fonts);

@@ -31,39 +31,58 @@ exports.defineAutoTests = function () {
             expect(typeof navigator.Fonts.getFontList).toBeDefined();
             expect(typeof navigator.Fonts.getFontList).toBe("function");
         });
+        
+        it("should contain a getDefaultFont function", function () {
+            expect(typeof navigator.Fonts.getDefaultFont).toBeDefined();
+            expect(typeof navigator.Fonts.getDefaultFont).toBe("function");
+        });
     });
 };
 
 exports.defineManualTests = function (contentEl, createActionButton) {
-    var device_tests = '<h3>Press Fonts button to get the list of defined fonts</h3>' +
-        '<div id="cdv_fonts"></div>' +
-        'Expected result: Status box will get updated with installed fonts.',
-        
-        logMessage = function (message, color) {
-            var log = document.getElementById('info'),
-                logLine = document.createElement('div');
-            
-            if (color) {
-                logLine.style.color = color;
-            }
-            logLine.innerHTML = message;
-            log.appendChild(logLine);
-        },
+    var logMessage = function (message, color) {
+        var log = document.getElementById('info'),
+            logLine = document.createElement('div');
 
-        clearLog = function () {
-            var log = document.getElementById('info');
-            log.innerHTML = '';
-        };
+        if (color) {
+            logLine.style.color = color;
+        }
+        logLine.innerHTML = message;
+        log.appendChild(logLine);
+    };
 
+    var clearLog = function () {
+        var log = document.getElementById('info');
+        log.innerHTML = '';
+    };
 
-    contentEl.innerHTML = '<div id="info"></div>' + device_tests;
+    var defaultFontTest = function () {
+        clearLog();
+        console.log("defaultFontTest()");
+        if (navigator.Fonts) {
+            navigator.Fonts.getDefaultFont(
+                function (defaultFont) {
+                    console.log("defaultFontTest() - value returned: " + defaultFont);
+                    logMessage("Default Font: " + defaultFont);
+                    logMessage("-----");
+                },
+                function (error) {
+                    logMessage(error);
+                }
+            );
+        } else {
+            console.log("Plugin error: Fonts plugin not found (is it installed?)");
+        }
+    };
 
-    createActionButton('Display Fonts', function () {
+    var fontListTest = function () {
         clearLog();
         var i = 0;
+        console.log("fontListTest()");
         if (navigator.Fonts) {
             navigator.Fonts.getFontList(
                 function (fontlist) {
+                    console.log(fontlist.length + " font(s) returned");
                     for (i = 0; i < fontlist.length; i++) {
                         logMessage("Font: " + fontlist[i]);
                     }
@@ -73,8 +92,20 @@ exports.defineManualTests = function (contentEl, createActionButton) {
                 }
             );
         } else {
-            logMessage("no Fonts object in navigator");
+            console.log("Plugin error: Fonts plugin not found (is it installed?)");
         }
-        
+    };
+
+    var device_tests = '<p/><div id="cdv_fonts"></div>' +
+        '<p/><div id="cdv_default"></div>';
+    
+    contentEl.innerHTML = '<div id="info"></div>' + device_tests;
+
+    createActionButton('Default Font', function () {
+        defaultFontTest();
+    }, "cdv_default");
+    
+    createActionButton('Display Fonts', function () {
+        fontListTest();
     }, "cdv_fonts");
 };

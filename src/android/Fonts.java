@@ -35,14 +35,15 @@ import java.io.RandomAccessFile;
 import java.util.HashMap;
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Typeface;
 
 
 public class Fonts extends CordovaPlugin {
     public static final String GETFONTLIST = "getFontList";
+    public static final String GETDEFAULTFONT = "getDefaultFont";
     
     @Override
     public boolean execute(String action, JSONArray args, final CallbackContext callbackContext) throws JSONException {
-//        JSONArray results;
         
         try {
             if (action.equals(GETFONTLIST)) {
@@ -56,7 +57,17 @@ public class Fonts extends CordovaPlugin {
                     }
                 );
                 return true;
-
+            } else if (action.equals(GETDEFAULTFONT)) {
+                cordova.getThreadPool().execute(
+                    new Runnable() {
+                        public void run() {
+                            final String results = getDefaultFont();
+                            System.out.println("results: " + results.toString());
+                            callbackContext.success(results);
+                        }
+                    }
+                );
+                return true;
             } else {
                 return false;
             }
@@ -65,6 +76,53 @@ public class Fonts extends CordovaPlugin {
             callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.JSON_EXCEPTION));
         } 
         return true;
+    }
+    
+    private String getDefaultFont() {
+        return "Roboto Regular";
+        /*
+        
+        // EDB - work around a google / android quirk. The following is how it _should_ work. 
+        // Unfortunately, even when Typeface.DEFAULT
+        // is compared against _every_ font in the font directories, no matches are found. Even
+        // the Roboto Regular font shows up as a mismatch, when it is the standard font
+        // according to the Google materials doc (https://material.google.com/style/typography.html#)
+        
+        String[] fontdirs = { "/system/fonts", "/system/font", "/data/fonts" };
+        TTFAnalyzer analyzer = new TTFAnalyzer();
+        Typeface tfDefault = Typeface.DEFAULT;
+        Typeface tfTemp = null;
+        String defaultFontName = "";
+
+        System.out.println("getDefaultFont(): entry");
+        System.out.println("tfDefault: " + tfDefault.toString());
+        
+        for ( String fontdir : fontdirs )
+        {
+            File dir = new File( fontdir );
+            if ( !dir.exists() )
+                continue;
+
+            File[] files = dir.listFiles();
+            if ( files == null )
+                continue;
+
+            for ( File file : files )
+            {
+                String fontname = analyzer.getTtfFontName( file.getAbsolutePath() );
+                if ( fontname != null ) {
+                    System.out.println("found font: " + fontname);
+                    tfTemp = Typeface.createFromFile(file);
+                    System.out.println("tfTemp: " + tfTemp.toString());
+                    if (tfTemp.equals(tfDefault)) {
+                        System.out.println("Found default font: " + fontname);
+                        defaultFontName = fontname;
+                    }
+                }
+            }
+        }
+        return defaultFontName; 
+        */
     }
     
     private JSONArray getFontList() {

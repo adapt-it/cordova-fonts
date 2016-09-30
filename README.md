@@ -23,7 +23,7 @@
 |:-:|:-:|
 | [![npm](https://img.shields.io/npm/dm/cordova-plugin-fonts.svg)](https://www.npmjs.com/package/cordova-plugin-fonts) | [![Build Status](https://travis-ci.org/adapt-it/cordova-fonts.svg?branch=master)](https://travis-ci.org/adapt-it/cordova-fonts) |
 
-A Cordova plugin that enumerates the fonts installed on the local device.
+A Cordova plugin that enumerates the fonts installed on the local device, and also provides the name of the default font.
 
 This plugin defines a global `Fonts` object, which provides access to the fonts installed on the device. The `Fonts` object is available from the `navigator` object after the `deviceready` event fires.
 
@@ -58,7 +58,7 @@ The `Fonts` object provides a way to enumerate through the list of fonts install
 
 ## Methods
 
-Currently this plugin only provides a single method, **getFontList**.
+Currently this plugin provides two methods, **getFontList** and **getDefaultFont**.
 
 ### GetFontList
 
@@ -85,6 +85,35 @@ Firefox OS does not provide an API to access the fonts on the device. The Fonts 
             },
             function (error) {
                 console.log("FontList error: " + error);
+            }
+        );
+    } else {
+        console.log("Plugin error: Fonts plugin not found (is it installed?)");
+    }
+
+### GetDefaultFont
+
+**Parameters:** 
+
+- **successCallback**: Callback that returns the string name of the default font on the device.
+- **errorCallback:** Callback that executes if an error occurs during the call.
+
+**Firefox OS quirks**
+
+Firefox OS does not provide an API to access the fonts on the device. The Fonts plugin currently returns a hard-coded string for the default font "Fira Sans Regular". See https://www.mozilla.org/en-US/styleguide/products/firefox-os/typeface/ for more information.
+    
+### Example
+
+    if (navigator.Fonts) {
+        console.log("Fonts object in navigator");
+        navigator.Fonts.getDefaultFont(
+            function (defaultFont) {
+                if (defaultFont) {
+                    console.log("Default Font: " + defaultFont);
+                }
+            },
+            function (error) {
+                console.log("DefaultFont error: " + error);
             }
         );
     } else {

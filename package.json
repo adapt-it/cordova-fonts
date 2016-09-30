@@ -1,6 +1,22 @@
 {
   "name": "cordova-plugin-fonts",
-  "version": "0.5.0",
+  "version": "0.6.0",
+  "description": "Cordova Fonts plugin",
+  "keywords": [
+    "cordova",
+    "ecosystem:cordova",
+    "cordova-android",
+    "cordova-ios",
+    "cordova-firefox",
+    "cordova-windows",
+    "plugin",
+    "fonts"
+  ],
+  "homepage": "https://github.com/adapt-it/cordova-fonts",
+  "bugs": {
+    "url": "https://github.com/adapt-it/cordova-fonts/issues"
+  },
+  "license": "Apache-2.0",
   "cordova": {
     "id": "cordova-plugin-fonts",
     "platforms": [
@@ -10,7 +26,6 @@
         "windows"
     ]
   },
-  "description": "Cordova Fonts plugin",
   "main": "fonts.js",
   "directories": {
     "doc": "doc",
@@ -25,17 +40,6 @@
     "url": "https://github.com/adapt-it/cordova-fonts.git"
   },
   "author": "Erik Brommers",
-  "license": "Apache-2.0",
-  "keywords": [
-    "cordova",
-    "ecosystem:cordova",
-    "cordova-android",
-    "cordova-ios",
-    "cordova-firefox",
-    "cordova-windows",
-    "plugin",
-    "fonts"
-  ],
   "engines": {
     "cordovaDependencies": {
       "2.0.0": {
@@ -45,9 +49,5 @@
   },
   "devDependencies": {
     "jshint": "^2.6.0"  
-  },
-  "bugs": {
-    "url": "https://github.com/adapt-it/cordova-fonts/issues"
-  },
-  "homepage": "https://github.com/adapt-it/cordova-fonts"
+  }
 }
