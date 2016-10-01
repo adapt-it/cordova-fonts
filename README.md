@@ -98,6 +98,10 @@ Firefox OS does not provide an API to access the fonts on the device. The Fonts 
 - **successCallback**: Callback that returns the string name of the default font on the device.
 - **errorCallback:** Callback that executes if an error occurs during the call.
 
+**Android quirks**
+
+Android currently returns a hard-coded string for the default font, "Roboto Regular". I haven't yet found a way to get the name of the default font using the Android API (see [Issue #2](https://github.com/adapt-it/cordova-fonts/issues/2) and [the corresponding query to Stack Overflow](http://stackoverflow.com/questions/39707936/android-retrieve-default-system-font-string-name). The Android code will be updated if I can get a solution to this issue.
+
 **Firefox OS quirks**
 
 Firefox OS does not provide an API to access the fonts on the device. The Fonts plugin currently returns a hard-coded string for the default font "Fira Sans Regular". See https://www.mozilla.org/en-US/styleguide/products/firefox-os/typeface/ for more information.
