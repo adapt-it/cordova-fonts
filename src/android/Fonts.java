@@ -29,13 +29,17 @@ import org.json.JSONObject;
 import org.json.JSONArray;
 import org.json.JSONException;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.util.HashMap;
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Typeface;
+import android.util.Xml;
+
+import org.xmlpull.v1.XmlPullParser;
+import org.xmlpull.v1.XmlPullParserException;
 
 
 public class Fonts extends CordovaPlugin {
@@ -79,50 +83,59 @@ public class Fonts extends CordovaPlugin {
     }
     
     private String getDefaultFont() {
-        return "Roboto Regular";
-        /*
-        
-        // EDB - work around a google / android quirk. The following is how it _should_ work. 
-        // Unfortunately, even when Typeface.DEFAULT
-        // is compared against _every_ font in the font directories, no matches are found. Even
-        // the Roboto Regular font shows up as a mismatch, when it is the standard font
-        // according to the Google materials doc (https://material.google.com/style/typography.html#)
-        
-        String[] fontdirs = { "/system/fonts", "/system/font", "/data/fonts" };
-        TTFAnalyzer analyzer = new TTFAnalyzer();
-        Typeface tfDefault = Typeface.DEFAULT;
-        Typeface tfTemp = null;
+        System.out.println("getFontList(): entry");
+        File configFilename = new File("/system/etc/system_fonts.xml");
         String defaultFontName = "";
-
-        System.out.println("getDefaultFont(): entry");
-        System.out.println("tfDefault: " + tfDefault.toString());
+        TTFAnalyzer analyzer = new TTFAnalyzer();
         
-        for ( String fontdir : fontdirs )
-        {
-            File dir = new File( fontdir );
-            if ( !dir.exists() )
-                continue;
-
-            File[] files = dir.listFiles();
-            if ( files == null )
-                continue;
-
-            for ( File file : files )
-            {
-                String fontname = analyzer.getTtfFontName( file.getAbsolutePath() );
-                if ( fontname != null ) {
-                    System.out.println("found font: " + fontname);
-                    tfTemp = Typeface.createFromFile(file);
-                    System.out.println("tfTemp: " + tfTemp.toString());
-                    if (tfTemp.equals(tfDefault)) {
-                        System.out.println("Found default font: " + fontname);
-                        defaultFontName = fontname;
-                    }
+        try {
+            FileInputStream fontsIn = new FileInputStream(configFilename);
+            XmlPullParser parser = Xml.newPullParser();
+            parser.setInput(fontsIn, null);
+            Boolean done = false;
+            Boolean getTheText = false;
+            int eventType;
+            String defaultFont = "";
+            while (!done) {
+                eventType = parser.next();
+                if (eventType == parser.START_TAG && parser.getName().equalsIgnoreCase("file")) {
+                    // the text is next up -- pull it
+                    getTheText = true;
+                }
+                if (eventType == parser.TEXT && getTheText == true) {
+                    // first name
+                    defaultFont = parser.getText();
+                    System.out.println("text for file tag:" + defaultFont);
+                    done = true;
+                }
+                if (eventType == parser.END_DOCUMENT) {
+                    System.out.println("hit end of system_fonts.xml document");
+                    done = true;
                 }
             }
+            
+            if (defaultFont.length() > 0) {
+                // found the font filename, most likely in /system/fonts. Now pull out the human-readable
+                // string from the font file
+                System.out.println("Figuring out default Font info");
+                String fontname = analyzer.getTtfFontName("/system/fonts/" + defaultFont);
+                if ( fontname != null ) {
+                    System.out.println("found font info: " + fontname);
+                    defaultFontName = fontname;
+                }                
+            }
+
+        } catch (RuntimeException e) {
+            System.err.println("Didn't create default family (most likely, non-Minikin build)");
+            // TODO: normal in non-Minikin case, remove or make error when Minikin-only
+        } catch (FileNotFoundException e) {
+            System.err.println("GetDefaultFont: config file Not found");
+        } catch (IOException e) {
+            System.err.println("GetDefaultFont: IO exception: " + e.getMessage());
+        } catch (XmlPullParserException e) {
+            System.err.println("getDefaultFont: XML parse exception " + e.getMessage());
         }
         return defaultFontName; 
-        */
     }
     
     private JSONArray getFontList() {
