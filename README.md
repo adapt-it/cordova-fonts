@@ -60,7 +60,7 @@ The `Fonts` object provides a way to enumerate through the list of fonts install
 
 Currently this plugin provides two methods, **getFontList** and **getDefaultFont**.
 
-### GetFontList
+### getFontList
 
 **Parameters:** 
 
@@ -91,7 +91,7 @@ Firefox OS does not provide an API to access the fonts on the device. The Fonts 
         console.log("Plugin error: Fonts plugin not found (is it installed?)");
     }
 
-### GetDefaultFont
+### getDefaultFont
 
 **Parameters:** 
 
