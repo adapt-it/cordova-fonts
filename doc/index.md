@@ -42,7 +42,7 @@ These commands will install the plugin from npm. You can find this plugin up on 
 ## Supported Platforms
 
 - Android
-- Amazon Fire OS (untested / just using Android code)
+- Amazon Fire OS (deprecated in newer versions of Cordova / just uses Android code)
 - Firefox OS
 - iOS
 

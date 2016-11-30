@@ -26,4 +26,36 @@ namespace WPCordovaClassLib.Cordova.Commands
             }
         }
     }
+
+    /// <summary>
+    /// Wraps data into JSON format
+    /// Method taken from Apache / cordova-plugin-globalization
+    /// </summary>
+    /// <param name="data">data</param>
+    /// <returns>data formatted as JSON object</returns>
+    static string WrapIntoJSON<T>(T data, string keyName = "value", string stringifiedData = null)
+    {
+        string param = "{0}";
+        stringifiedData = stringifiedData ?? data.ToString();
+
+        if (data.GetType() == typeof(string))
+        {
+            param = "\"" + param + "\"";
+        }
+
+        if (data.GetType() == typeof(bool))
+        {
+            stringifiedData = stringifiedData.ToLower();
+        }
+
+        if (data.GetType() == typeof(string[]))
+        {
+            stringifiedData = JsonHelper.Serialize(data);
+        }
+
+        var formattedData = string.Format("\"" + keyName + "\":" + param, stringifiedData);
+        formattedData = "{" + formattedData + "}";
+
+        return formattedData;
+    }    
 }
