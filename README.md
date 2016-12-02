@@ -127,7 +127,7 @@ Firefox OS does not provide an API to access the fonts on the device. The Fonts 
 
 The cordova-fonts plugin uses the cordova-plugin-test-framework to run unit tests. Complete the following to run through the plugin unit tests:
 
-1. Use your existing cordova app, or create a new one.
+1. Use your existing cordova app, or create a new one. You can also use the test project that has already been set up for this over at https://github.com/eb1/test-fonts (just use the instructions listed there instead of the ones below).
 2. Add the cordova-fonts plugin and test / test framework plugins:
 
         cordova plugin add https://github.com/adapt-it/cordova-fonts.git
