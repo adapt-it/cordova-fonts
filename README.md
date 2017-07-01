@@ -19,9 +19,9 @@
 
 # cordova-plugin-fonts
 
-| Download Activity | Travis CI |
-|:-:|:-:|
-| [![npm](https://img.shields.io/npm/dm/cordova-plugin-fonts.svg)](https://www.npmjs.com/package/cordova-plugin-fonts) | [![Build Status](https://travis-ci.org/adapt-it/cordova-fonts.svg?branch=master)](https://travis-ci.org/adapt-it/cordova-fonts) |
+| Download Activity | Travis CI | Snyk |
+|:-:|:-:|:-:|
+| [![npm](https://img.shields.io/npm/dm/cordova-plugin-fonts.svg)](https://www.npmjs.com/package/cordova-plugin-fonts) | [![Build Status](https://travis-ci.org/adapt-it/cordova-fonts.svg?branch=master)](https://travis-ci.org/adapt-it/cordova-fonts) | [![Known Vulnerabilities](https://snyk.io/test/github/adapt-it/cordova-fonts/badge.svg)](https://snyk.io/test/github/adapt-it/cordova-fonts) |
 
 A Cordova plugin that enumerates the fonts installed on the local device, and also provides the name of the default font.
 
