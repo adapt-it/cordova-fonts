@@ -132,7 +132,7 @@ The cordova-fonts plugin uses the cordova-plugin-test-framework to run unit test
 
         cordova plugin add https://github.com/adapt-it/cordova-fonts.git
         cordova plugin add https://github.com/adapt-it/cordova-fonts.git#:/tests
-        cordova plugin add http://git-wip-us.apache.org/repos/asf/cordova-plugin-test-framework.git
+        cordova plugin add https://github.com/apache/cordova-plugin-test-framework.git
 
 3. Change the start page in your cordova app's `config.xml` with `<content src="cdvtests/index.html" />` or navigate to `cdvtests/index.html` from within your app.
 4. Build and run the application in an emulator or on the device.
