@@ -76,9 +76,9 @@ Currently this plugin provides two methods, **getFontList** and **getDefaultFont
         console.log("Fonts object in navigator");
         navigator.Fonts.getFontList(
             function (fontList) {
-                if (fontlist) {
-                    for (var i = 0; i < fontlist.length; i++) {
-                        console.log("Font: " + fontlist[i]);
+                if (fontList) {
+                    for (var i = 0; i < fontList.length; i++) {
+                        console.log("Font: " + fontList[i]);
                     }
                 }
             },

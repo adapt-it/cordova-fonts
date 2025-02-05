@@ -117,10 +117,11 @@ function getFontList(successCB, errorCB) {
             "Bradley Hand",
             "Brush Script MT"
         ];
-        var retValue = Detector.baseFonts; // initial value - fallback fonts (known to be supported)
+        var d = new Detector();
+        var retValue = ['monospace', 'sans-serif', 'serif', 'cursive', 'fantasy']; // initial value - fallback fonts (known to be supported)
         // iterate through our tryList array; if it's detected, add it to the results
         tryList.forEach(function(n) {
-            if (Detector.detect(n)) {
+            if (d.detect(n)) {
                 retValue.push(n);
             }
         });
