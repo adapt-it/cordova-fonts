@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <plugin id="cordova-plugin-fonts" 
-        version="0.6.5" 
+        version="1.0.0" 
         xmlns="http://apache.org/cordova/ns/plugins/1.0" 
         xmlns:rim="http://www.blackberry.com/ns/widgets"
         xmlns:android="http://schemas.android.com/apk/res/android">
@@ -33,38 +33,17 @@
             </feature>
         </config-file>
         <source-file src="src/android/Fonts.java" target-dir="src/org/adaptit/cordova/Fonts" />      
-     </platform>          
-    <!-- Amazon Fire (just reusing Android) -->
-    <platform name="amazon-fireos">
-        <config-file target="config.xml" parent="/*">
-            <feature name="Fonts">
-                <param name="android-package" value="org.adaptit.cordova.fonts.Fonts"/>
-            </feature>
-        </config-file>
-        <source-file src="src/android/Fonts.java" target-dir="src/org/adaptit/cordova/Fonts" />      
-    </platform>    
-    <!-- firefoxos -->
-    <platform name="firefoxos">
-        <js-module src="src/firefoxos/FontsProxy.js" name="FontsProxy">
+     </platform>
+    <!-- browser -->
+    <platform name="browser">
+        <js-module src="src/browser/FontsProxy.js" name="FontsProxy">
             <runs />
         </js-module>
     </platform>
-    <!-- wp8 -->
-    <platform name="wp8">
-        <config-file target="config.xml" parent="/*">
-            <feature name="Fonts">
-                <param name="wp-package" value="Fonts"/>
-            </feature>
-        </config-file>
-        <source-file src="src/wp/Fonts.cs" />
-    </platform>
-    <!-- windows (UWP) -->
-    <platform name="windows">
-        <config-file target="config.xml" parent="/*">
-            <feature name="Fonts">
-                <param name="wp-package" value="Fonts"/>
-            </feature>
-        </config-file>
-        <source-file src="src/wp/Fonts.cs" />
+    <!-- electron (using browser) -->
+    <platform name="electron">
+        <js-module src="src/browser/FontsProxy.js" name="FontsProxy">
+            <runs />
+        </js-module>
     </platform>
 </plugin>

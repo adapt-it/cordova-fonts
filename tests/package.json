@@ -1,0 +1,17 @@
+{
+    "name": "cordova-plugin-fonts-tests",
+    "version": "1.0.0-dev",
+    "description": "Fonts testing",
+    "cordova": {
+      "id": "cordova-plugin-fonts-tests",
+      "platforms": [
+        "android"
+      ]
+    },
+    "keywords": [
+      "ecosystem:cordova",
+      "cordova-android"
+    ],
+    "author": "Erik Brommers",
+    "license": "Apache-2.0"
+  }

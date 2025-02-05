@@ -26,25 +26,12 @@ This plugin defines a global `Fonts` object, which provides access to the fonts 
         console.log(navigator.Fonts);
     }
 
-## Installation
-
-From the Command line:
-
-    cordova plugin add cordova-plugin-fonts
-
-Config.xml for PhoneGap Build:
-
-    <gap:plugin name="cordova-plugin-fonts" source="npm" />
-    
-These commands will install the plugin from npm. You can find this plugin up on npm [here](https://www.npmjs.com/package/cordova-plugin-fonts), or by searching for `ecosystem:cordova` in the npm registry like [this](https://www.npmjs.com/search?q=ecosystem%3Acordova). 
-
-
 ## Supported Platforms
 
 - Android
-- Amazon Fire OS (untested / just using Android code)
-- Firefox OS
 - iOS
+- Browser
+- Electron (using Browser code)
 
 # Fonts
 
@@ -52,19 +39,19 @@ The `Fonts` object provides a way to enumerate through the list of fonts install
 
 ## Methods
 
-Currently this plugin only provides a single method, **getFontList**.
+Currently this plugin provides two methods, **getFontList** and **getDefaultFont**.
 
-### GetFontList
+### getFontList
 
-**Parameters:** 
+**Parameters:**
 
 - **successCallback**: Callback that returns the list of fonts as an array of string values.
 - **errorCallback:** Callback that executes if an error occurs while retrieving the list of fonts on the local device.
 
-**Firefox OS quirks**
+**Notes**
 
-Firefox OS does not provide an API to access the fonts on the device. The Fonts plugin currently returns a list corresponding to the fonts.mk file found in the mozilla-b2g project (https://github.com/mozilla-b2g/moztt/blob/master/fonts.mk), but it is a hard-coded list and not guaranteed to be correct on any particular version or distro of Firefox OS.
-    
+- The Browser and Electron Platforms test for the [local font access API](https://developer.mozilla.org/en-US/docs/Web/API/Local_Font_Access_API). If the underlying browser supports the API, it will return a string array of the font data's [font family](https://developer.mozilla.org/en-US/docs/Web/API/FontData/family) for each supported font. If the underlying browser _does not_ support the API, the plugin iterates through known browser-safe fonts and tries to detect their presence on the device.
+
 ### Example
 
     if (navigator.Fonts) {
@@ -85,6 +72,35 @@ Firefox OS does not provide an API to access the fonts on the device. The Fonts 
         console.log("Plugin error: Fonts plugin not found (is it installed?)");
     }
 
+### getDefaultFont
+
+**Parameters:**
+
+- **successCallback**: Callback that returns the string name of the default font on the device.
+- **errorCallback:** Callback that executes if an error occurs during the call.
+
+**Notes**
+
+- The Browser and Electron platforms test for the [local font access API](https://developer.mozilla.org/en-US/docs/Web/API/Local_Font_Access_API), which has limited support (Chrome and Edge browsers). If the underlying browser supports this API, it will return the family name of the first font in the supported list as the default font. If the underlying browser _does not_ support this API, it will return "serif" as the default font.
+
+### Example
+
+    if (navigator.Fonts) {
+        console.log("Fonts object in navigator");
+        navigator.Fonts.getDefaultFont(
+            function (defaultFont) {
+                if (defaultFont) {
+                    console.log("Default Font: " + defaultFont);
+                }
+            },
+            function (error) {
+                console.log("DefaultFont error: " + error);
+            }
+        );
+    } else {
+        console.log("Plugin error: Fonts plugin not found (is it installed?)");
+    }
+
     
 ## Internal Development / Unit Testing
 
@@ -97,7 +113,7 @@ The cordova-fonts plugin uses the cordova-plugin-test-framework to run unit test
 
         cordova plugin add https://github.com/adapt-it/cordova-fonts.git
         cordova plugin add https://github.com/adapt-it/cordova-fonts.git#:/tests
-        cordova plugin add http://git-wip-us.apache.org/repos/asf/cordova-plugin-test-framework.git
+        cordova plugin add cordova-plugin-test-framework
 
 3. Change the start page in your cordova app's `config.xml` with `<content src="cdvtests/index.html" />` or navigate to `cdvtests/index.html` from within your app.
 4. Build and run the application in an emulator or on the device.
