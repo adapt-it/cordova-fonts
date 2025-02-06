@@ -1,23 +1,17 @@
 {
-  "name": "cordova-plugin-fonts-tests",
-  "version": "0.7.0",
-  "description": "",
-  "cordova": {
-    "id": "cordova-plugin-fonts-tests",
-    "platforms": [
-        "firefoxos",
-        "android",
-        "ios",
-        "windows"
-    ]
-  },
-  "keywords": [
-    "ecosystem:cordova",
-    "cordova-android",
-    "cordova-ios",
-    "cordova-firefox",
-    "cordova-windows"
-  ],
-  "license": "Apache-2.0",
-  "author": "Erik Brommers"
-}
+    "name": "cordova-plugin-fonts-tests",
+    "version": "1.0.0-dev",
+    "description": "Fonts testing",
+    "cordova": {
+      "id": "cordova-plugin-fonts-tests",
+      "platforms": [
+        "android"
+      ]
+    },
+    "keywords": [
+      "ecosystem:cordova",
+      "cordova-android"
+    ],
+    "author": "Erik Brommers",
+    "license": "Apache-2.0"
+  }
