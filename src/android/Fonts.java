@@ -85,6 +85,9 @@ public class Fonts extends CordovaPlugin {
     private String getDefaultFont() {
         System.out.println("getFontList(): entry");
         File configFilename = new File("/system/etc/system_fonts.xml");
+        if (!configFilename.exists()) {
+            configFilename = new File("/system/etc/fonts.xml");
+        }
         String defaultFontName = "";
         TTFAnalyzer analyzer = new TTFAnalyzer();
         
@@ -98,7 +101,8 @@ public class Fonts extends CordovaPlugin {
             String defaultFont = "";
             while (!done) {
                 eventType = parser.next();
-                if (eventType == parser.START_TAG && parser.getName().equalsIgnoreCase("file")) {
+                String tagName = parser.getName();
+                if (eventType == parser.START_TAG && (tagName.equalsIgnoreCase("file") || tagName.equalsIgnoreCase("font"))) {
                     // the text is next up -- pull it
                     getTheText = true;
                 }
