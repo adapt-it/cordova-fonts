@@ -25,7 +25,6 @@ package org.adaptit.cordova.fonts;
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.PluginResult;
-import org.json.JSONObject;
 import org.json.JSONArray;
 import org.json.JSONException;
 import java.io.File;
@@ -33,7 +32,6 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.RandomAccessFile;
-import java.util.HashMap;
 import android.app.Activity;
 import android.content.Intent;
 import android.util.Xml;
@@ -83,7 +81,7 @@ public class Fonts extends CordovaPlugin {
     }
     
     private String getDefaultFont() {
-        System.out.println("getFontList(): entry");
+        System.out.println("getDefaultFont(): entry");
         File configFilename = new File("/system/etc/system_fonts.xml");
         if (!configFilename.exists()) {
             configFilename = new File("/system/etc/fonts.xml");
@@ -91,8 +89,7 @@ public class Fonts extends CordovaPlugin {
         String defaultFontName = "";
         TTFAnalyzer analyzer = new TTFAnalyzer();
         
-        try {
-            FileInputStream fontsIn = new FileInputStream(configFilename);
+        try (FileInputStream fontsIn = new FileInputStream(configFilename)){
             XmlPullParser parser = Xml.newPullParser();
             parser.setInput(fontsIn, null);
             Boolean done = false;
@@ -180,37 +177,35 @@ public class Fonts extends CordovaPlugin {
 class TTFAnalyzer
 {
     // This function parses the TTF file and returns the font name specified in the file
+    // See http://developer.apple.com/fonts/ttrefman/rm06/Chap6.html
     public String getTtfFontName( String fontFilename )
     {
-        try
+        try (RandomAccessFile file = new RandomAccessFile( fontFilename, "r" ))
         {
-            // Parses the TTF file format.
-            // See http://developer.apple.com/fonts/ttrefman/rm06/Chap6.html
-            m_file = new RandomAccessFile( fontFilename, "r" );
  
             // Read the version first
-            int version = readDword();
+            long version = readDword(file);
  
             // The version must be either 'true' (0x74727565) or 0x00010000
             if ( version != 0x74727565 && version != 0x00010000 )
                 return null;
  
             // The TTF file consist of several sections called "tables", and we need to know how many of them are there.
-            int numTables = readWord();
+            int numTables = readWord(file);
  
             // Skip the rest in the header
-            readWord(); // skip searchRange
-            readWord(); // skip entrySelector
-            readWord(); // skip rangeShift
+            readWord(file); // skip searchRange
+            readWord(file); // skip entrySelector
+            readWord(file); // skip rangeShift
  
             // Now we can read the tables
             for ( int i = 0; i < numTables; i++ )
             {
                 // Read the table entry
-                int tag = readDword();
-                readDword(); // skip checksum
-                int offset = readDword();
-                int length = readDword();
+                long tag = readDword(file);
+                readDword(file); // skip checksum
+                int offset = (int) readDword(file);
+                int length = (int) readDword(file);
  
                 // Now here' the trick. 'name' field actually contains the textual string name.
                 // So the 'name' string in characters equals to 0x6E616D65
@@ -219,8 +214,8 @@ class TTFAnalyzer
                     // Here's the name section. Read it completely into the allocated buffer
                     byte[] table = new byte[ length ];
  
-                    m_file.seek( offset );
-                    read( table );
+                    file.seek( offset );
+                    read(file, table );
  
                     // This is also a table. See http://developer.apple.com/fonts/ttrefman/rm06/Chap6name.html
                     // According to Table 36, the total number of table records is stored in the second word, at the offset 2.
@@ -270,36 +265,33 @@ class TTFAnalyzer
         }
     }
  
-    // Font file; must be seekable
-    private RandomAccessFile m_file = null;
- 
     // Helper I/O functions
-    private int readByte() throws IOException
+    private int readByte(RandomAccessFile file) throws IOException
     {
-        return m_file.read() & 0xFF;
+        return file.read() & 0xFF;
     }
  
-    private int readWord() throws IOException
+    private int readWord(RandomAccessFile file) throws IOException
     {
-        int b1 = readByte();
-        int b2 = readByte();
+        int b1 = readByte(file);
+        int b2 = readByte(file);
  
         return b1 << 8 | b2;
     }
  
-    private int readDword() throws IOException
+    private long readDword(RandomAccessFile file) throws IOException
     {
-        int b1 = readByte();
-        int b2 = readByte();
-        int b3 = readByte();
-        int b4 = readByte();
+        long b1 = readByte(file);
+        long b2 = readByte(file);
+        long b3 = readByte(file);
+        long b4 = readByte(file);
  
-        return b1 << 24 | b2 << 16 | b3 << 8 | b4;
+        return (b1 << 24 | b2 << 16 | b3 << 8 | b4) & 0xFFFFFFFFL;
     }
  
-    private void read( byte [] array ) throws IOException
+    private void read(RandomAccessFile file,byte [] array ) throws IOException
     {
-        if ( m_file.read( array ) != array.length )
+        if ( file.read( array ) != array.length )
             throw new IOException();
     }
  
