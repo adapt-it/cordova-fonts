@@ -35,7 +35,7 @@
     UIFont *systemFont = [UIFont systemFontOfSize:12];
     
     if (systemFont != nil) {
-        NSString *fontName = systemFont.familyName;
+        NSString *fontName = systemFont.fontName;
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:fontName];
     } else {
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR];
