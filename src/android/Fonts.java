@@ -119,7 +119,7 @@ public class Fonts extends CordovaPlugin {
                 // found the font filename, most likely in /system/fonts. Now pull out the human-readable
                 // string from the font file
                 System.out.println("Figuring out default Font info");
-                String fontname = analyzer.getTtfFontName("/system/fonts/" + defaultFont);
+                String fontname = analyzer.getFontName("/system/fonts/" + defaultFont);
                 if ( fontname != null ) {
                     System.out.println("found font info: " + fontname);
                     defaultFontName = fontname;
@@ -159,7 +159,7 @@ public class Fonts extends CordovaPlugin {
             for ( File file : files )
             {
 //                System.out.println("analyzing file: " + file.getAbsolutePath());
-                String fontname = analyzer.getTtfFontName( file.getAbsolutePath() );
+                String fontname = analyzer.getFontName( file.getAbsolutePath() );
                 if ( fontname != null ) {
                     System.out.println("found font: " + fontname);
                     fonts.put( fontname );
@@ -173,12 +173,13 @@ public class Fonts extends CordovaPlugin {
     }
 }
 
-// The class which loads the TTF file, parses it and returns the TTF font name
+// The class which loads the OTF / TTF file, parses it and returns the font name
+// EDB 3/11/2026 - add OTF file support
 class TTFAnalyzer
 {
-    // This function parses the TTF file and returns the font name specified in the file
+    // This function parses the file and returns the font name specified in the file
     // See http://developer.apple.com/fonts/ttrefman/rm06/Chap6.html
-    public String getTtfFontName( String fontFilename )
+    public String getFontName( String fontFilename )
     {
         try (RandomAccessFile file = new RandomAccessFile( fontFilename, "r" ))
         {
@@ -186,8 +187,9 @@ class TTFAnalyzer
             // Read the version first
             long version = readDword(file);
  
-            // The version must be either 'true' (0x74727565) or 0x00010000
-            if ( version != 0x74727565 && version != 0x00010000 )
+            // sanity check the version -- this needs to be either an OTF or TTF file
+            // The version must be either 'true' (0x74727565), OTTO (0x4F54544F / for OTF), or 0x00010000
+            if ( version != 0x74727565 && version != 0x00010000 && version != 0x4F54544F )
                 return null;
  
             // The TTF file consist of several sections called "tables", and we need to know how many of them are there.
