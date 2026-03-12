@@ -82,9 +82,14 @@ public class Fonts extends CordovaPlugin {
     
     private String getDefaultFont() {
         System.out.println("getDefaultFont(): entry");
-        File configFilename = new File("/system/etc/system_fonts.xml");
+        File configFilename = new File("/system/etc/fonts.xml");
         if (!configFilename.exists()) {
-            configFilename = new File("/system/etc/fonts.xml");
+            // Pre-Android 5.0
+            configFilename = new File("/system/etc/system_fonts.xml");
+        }
+        if (!configFilename.exists()) {
+            // some OEMs use this dir
+            configFilename = new File("/system/etc/font_fallback.xml");
         }
         String defaultFontName = "";
         TTFAnalyzer analyzer = new TTFAnalyzer();
@@ -235,21 +240,23 @@ class TTFAnalyzer
                         int nameid_value = getWord( table, nameid_offset + 6 );
  
                         // Table 42 lists the valid name Identifiers. We're interested in 4 but not in Unicode encoding (for simplicity).
-                        // The encoding is stored as PlatformID and we're interested in Mac encoding
-                        if ( nameid_value == 4 && platformID == 1 )
-                        {
+                        // The encoding is stored as PlatformID and we're interested in Mac and UTF_16BE encoding
+                        if ( nameid_value == 4 ) {
                             // We need the string offset and length, which are the word 6 and 5 respectively
                             int name_length = getWord( table, nameid_offset + 8 );
-                            int name_offset = getWord( table, nameid_offset + 10 );
- 
-                            // The real name string offset is calculated by adding the string_offset
-                            name_offset = name_offset + string_offset;
- 
-                            // Make sure it is inside the array
-                            if ( name_offset >= 0 && name_offset + name_length < table.length )
-                                return new String( table, name_offset, name_length );
-                        }
-                    }
+                            int name_offset = getWord( table, nameid_offset + 10 ) + string_offset;
+
+                            if ( name_offset >= 0 && name_offset + name_length < table.length ) 
+                            {
+                                if (platformID == 1) {
+                                    // Mac encoding
+                                    return new String( table, name_offset, name_length );
+                                } else if (platformID == 3) { 
+                                    // UTF_16BE encoding
+                                    return new String( table, name_offset, name_length, java.nio.charset.StandardCharsets.UTF_16BE );
+                                }
+                            }
+                        } 
                 }
             }
  
