@@ -216,8 +216,7 @@ class TTFAnalyzer
  
                 // Now here' the trick. 'name' field actually contains the textual string name.
                 // So the 'name' string in characters equals to 0x6E616D65
-                if ( tag == 0x6E616D65 )
-                {
+                if ( tag == 0x6E616D65 ) {
                     // Here's the name section. Read it completely into the allocated buffer
                     byte[] table = new byte[ length ];
  
@@ -231,8 +230,7 @@ class TTFAnalyzer
                     int string_offset = getWord( table, 4 );
  
                     // Record starts from offset 6
-                    for ( int record = 0; record < count; record++ )
-                    {
+                    for ( int record = 0; record < count; record++ ) {
                         // Table 37 tells us that each record is 6 words -> 12 bytes, and that the nameID is 4th word so its offset is 6.
                         // We also need to account for the first 6 bytes of the header above (Table 36), so...
                         int nameid_offset = record * 12 + 6;
@@ -246,8 +244,7 @@ class TTFAnalyzer
                             int name_length = getWord( table, nameid_offset + 8 );
                             int name_offset = getWord( table, nameid_offset + 10 ) + string_offset;
 
-                            if ( name_offset >= 0 && name_offset + name_length < table.length ) 
-                            {
+                            if ( name_offset >= 0 && name_offset + name_length < table.length ) {
                                 if (platformID == 1) {
                                     // Mac encoding
                                     return new String( table, name_offset, name_length );
@@ -257,9 +254,9 @@ class TTFAnalyzer
                                 }
                             }
                         } 
+                    }
                 }
-            }
- 
+            } 
             return null;
         }
         catch (FileNotFoundException e)
